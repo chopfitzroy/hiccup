@@ -1,6 +1,8 @@
-# hiccup
+# Hiccup
 
 A super strict yet probably too lenient methodology for writing maintainable CSS.
+
+If you want to see it in action demo [here](http://codepen.io/crashy/pen/vKVWZP) (intentionally ugly to make it easy to follow).
 
 ### Intention
 
@@ -154,7 +156,7 @@ div.alert {
 }
 ```
 
-A state works similar to a modifier but it is top level and instead of just modifying the element it is applied to it allows you to modify its children and their modifiers.
+A state works similar to a modifier but it is top level and instead of just modifying the element it is applied to it allows you to modify its children and their modifiers. It is intended for things like side menu's where you may have an expanded and shrunk state (as seen in [demo](http://codepen.io/crashy/pen/vKVWZP))
 
 ### Conclusion
 
