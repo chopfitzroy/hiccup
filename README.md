@@ -58,11 +58,16 @@ div.alert {
   //...
   > h4._title {
     font-size: 30px;
+    > i._icon {
+      font-size: 20px;
+      color: blue;
+    }
   }
 }
 ```
 
-Children should always be targeted using the direct descendant slector. Hiccup however does allow for up to 3 levels of non-classed selectors so if you do need to drop down 2 or 3 elements to reach your child selector you would use the following code:
+Unlike BEM components children can have children as long as all children remain within said component. This means your CSS will not be as flat as BEM but it will let you move up and down the DOM with more ease.
+Children should also always be targeted using the direct descendant slector. Hiccup however does allow for up to 3 levels of non-classed selectors so if you do need to drop down 2 or 3 elements to reach your child selector you would use the following code:
 
 ```scss
 div.alert {
