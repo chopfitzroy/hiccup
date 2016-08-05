@@ -34,7 +34,7 @@ We differentiate these class types using prefixes as follows:
 }
 ```
 
-Globals are the only selector not type case and that do not require the direct descendant selector as they can be used globally.
+Globals are the only selector not typecast and that do not require the direct descendant selector as they can be used globally.
 
 **Components**:
 
