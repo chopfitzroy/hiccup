@@ -41,6 +41,8 @@ div.alert {
 
 All classes **excluding globals** should be typecast to a certain element like `div.alert` why is this? When we write CSS we assume certain properties about the element we are going to apply the class to. This means despite how css is usually written there is an intended structure for the classes we write. To strictly enforce this we require all classes be element typecast to force the correct semantics.
 
+As an added bonus this also speeds up the browsers CSS selector engine.
+
 **Children**:
 
 ```scss
@@ -67,7 +69,26 @@ div.alert {
 }
 ```
 
-We do this to allow a level of flexibility within the hiccup framework, there are (not usually, but occaisonally) scenarios where the best option will be to target the HTML tags directly.
+This allows a level of flexibility within the hiccup framework, there are (not usually, but occaisonally) scenarios where the best option will be to target the HTML tags directly.
+
+Why do we use the direct descendant selector?
+
+Becuase if we have nested components with children of the same name, the second children with the same name will inherit styles from the first child class.
+
+For example.
+
+```scss
+div.component-one {
+  div._child {
+    // Has it's own styles
+  }
+  div.component-two {
+    div._child {
+      // Would have it's styles + the styles from the ._child above it,
+      // if the direct descendant selector was not used
+    }
+  }
+}
 
 **Modifiers**:
 
