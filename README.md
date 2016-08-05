@@ -60,13 +60,13 @@ div.alert {
 }
 ```
 
-Children should always be targeted using the direct descendant slector. Hiccup however does allow for up to 3 nested levels of non-classed selectors so if you do need to drop down 2 or 3 elements to reach your child selector you would use the following code:
+Children should always be targeted using the direct descendant slector. Hiccup however does allow for up to 3 levels of non-classed selectors so if you do need to drop down 2 or 3 elements to reach your child selector you would use the following code:
 
 ```scss
 div.alert {
   //...
-  > div {
-    > div {
+  div {
+    div {
       > h4._title {
         font-size: 30px;
       }
