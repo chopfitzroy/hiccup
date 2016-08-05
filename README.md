@@ -2,6 +2,10 @@
 
 A super strict yet probably too lenient methodology for writing maintainable CSS.
 
+### Intention
+
+To encourage minimal markup and help write concise and maintainable css.
+
 ### Why
 
 Why not use just another CSS naming convention like BEM or OOCSS. I found that they were either too dictating, too restrictive, or just made my class names rediculosly huge like `.some-class__child-class--class-modifier` really??? O.o who wants that?
@@ -29,6 +33,8 @@ We differentiate these class types using prefixes as follows:
   color: white;
 }
 ```
+
+Globals are the only selector not type case and that do not require the direct descendant selector as they can be used globally.
 
 **Components**:
 
