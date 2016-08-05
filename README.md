@@ -82,7 +82,11 @@ div.alert {
 }
 ```
 
-This allows a level of flexibility within the hiccup framework, there are (not usually, but occaisonally) scenarios where the best option will be to target the HTML tags directly.
+This allows a level of flexibility within the hiccup framework, as there are (not usually, but occaisonally) scenarios where you will want to use targeting of the HTML tags directly to help your CSS understand how your HTML is structured.
+
+So I can just target and style the HTML tags directly?
+
+No. You can target HTML tags only to mirror your HMTL structure in your CSS if you want add custom style attributes to an element it becomes a child, this way as you read through your mark up you will quickly be able to identify which elements have custom styling.
 
 Note: in cases where you do have some overlap with your non classed selectors (this will be when one of your childrens typecasting matches the generic HTML tag) I would recommend using the `:not()` selector.
 
