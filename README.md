@@ -77,6 +77,21 @@ div.alert {
 
 This allows a level of flexibility within the hiccup framework, there are (not usually, but occaisonally) scenarios where the best option will be to target the HTML tags directly.
 
+Note: in cases where you do have some overlap with yoru non classed selectors (this will be when one of your childrens typecasting matches the generic HTML tag) I would recommend using the `:not()` selector.
+
+```scss
+div.alert {
+  //...
+  div:not([class]) {
+    div:not(.component) {
+      > h4._title {
+        font-size: 30px;
+      }
+    }
+  }
+}
+```
+
 Why do we use the direct descendant selector?
 
 Becuase if we have nested components with children of the same name, the second children with the same name will inherit styles from the first child class.
