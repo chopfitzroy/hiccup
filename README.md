@@ -89,6 +89,7 @@ div.component-one {
     }
   }
 }
+```
 
 **Modifiers**:
 
