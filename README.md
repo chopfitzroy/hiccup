@@ -77,7 +77,7 @@ div.alert {
 
 This allows a level of flexibility within the hiccup framework, there are (not usually, but occaisonally) scenarios where the best option will be to target the HTML tags directly.
 
-Note: in cases where you do have some overlap with yoru non classed selectors (this will be when one of your childrens typecasting matches the generic HTML tag) I would recommend using the `:not()` selector.
+Note: in cases where you do have some overlap with your non classed selectors (this will be when one of your childrens typecasting matches the generic HTML tag) I would recommend using the `:not()` selector.
 
 ```scss
 div.alert {
@@ -91,6 +91,8 @@ div.alert {
   }
 }
 ```
+
+Both of the above selectors will work I would personally recommend the `:not([class])`.
 
 Why do we use the direct descendant selector?
 
