@@ -18,8 +18,8 @@ So how does it work? Please bear in mind that this is a living document and that
 
 There are five kinds of classes used with the hiccup methodology:
 
-* Globals - `!`
 * Components
+* Globals - `!`
 * Children - `_`
 * Modifiers - `~`
 * States - `+`
@@ -31,8 +31,8 @@ We differentiate these class types using prefixes as follows:
 **Globals**:
 
 ```scss
-.\!font-white {
-  color: white;
+.\!font-large {
+  font-size: 30px;
 }
 ```
 
@@ -41,41 +41,59 @@ Globals are the only selector not typecast and that do not require the direct de
 **Components**:
 
 ```scss
-div.alert {
-  padding: 20px;
-  border: 2px solid black;
+div.side-menu {
+  background-color: lime;
+  display: inline-block;
+  min-width: 350px;
+  height: 100vh;
+  float: left;
 }
 ```
 
-All classes **excluding globals** should be typecast to a certain element like `div.alert` why is this? When we write CSS we assume certain properties about the element we are going to apply the class to. This means despite how css is usually written there is an intended structure for the classes we write. To strictly enforce this we require all classes be element typecast to force the correct semantics.
+All classes **excluding globals** should be typecast to a certain element like `div.alert` why is this?
+When we write CSS we assume certain properties about the element we are going to apply the class to (for example that a `div` is `display: block;`). This means despite how CSS is usually written there is an intended HTML structure for said CSS.
+To strictly enforce the intended structure we require all classes be element typecast to force the correct semantics.
 
 As an added bonus this also speeds up the browsers CSS selector engine.
 
 **Children**:
 
 ```scss
-div.alert {
+div.side-menu {
   //...
-  > h4._title {
-    font-size: 30px;
-    > i._icon {
-      font-size: 20px;
-      color: blue;
+  > ul._nav {
+  //...  
+  }
+}
+```
+
+Unlike BEM components children can have children as long as all children remain within said component.
+This means your CSS will not be as flat as BEM but it will let you move up and down the DOM with more ease.
+
+```scss
+div.side-menu {
+  //...
+  > ul._nav {
+    li {
+      > a._link {
+        // Child of child
+      }
     }
   }
 }
 ```
 
-Unlike BEM components children can have children as long as all children remain within said component. This means your CSS will not be as flat as BEM but it will let you move up and down the DOM with more ease.
-Children should also always be targeted using the direct descendant slector. Hiccup however does allow for up to 3 levels of non-classed selectors so if you do need to drop down 2 or 3 elements to reach your child selector you would use the following code:
+Children should also always be targeted using the direct descendant slector.
+This is intentional so if you have a component nested within another component and both components have children with the same name the nested componets child will **not** inherit the parent components child properties.
+Hiccup however does allow for up to 3 levels of non-classed selectors like so:
 
 ```scss
-div.alert {
+div.side-menu {
   //...
-  div {
-    div {
-      > h4._title {
-        font-size: 30px;
+  > ul._nav {
+    li { // Generic selector
+      > a._link {
+        //...
       }
     }
   }
@@ -83,61 +101,24 @@ div.alert {
 ```
 
 This allows a level of flexibility within the hiccup framework, as there are (not usually, but occaisonally) scenarios where you will want to use targeting of the HTML tags directly to help your CSS understand how your HTML is structured.
-
-So I can just target and style the HTML tags directly?
-
-No. You can target HTML tags only to mirror your HMTL structure in your CSS if you want add custom style attributes to an element it becomes a child, this way as you read through your mark up you will quickly be able to identify which elements have custom styling.
-
-Note: in cases where you do have some overlap with your non classed selectors (this will be when one of your childrens typecasting matches the generic HTML tag) I would recommend using the `:not()` selector.
-
-```scss
-div.alert {
-  //...
-  div:not([class]) {
-    div:not(.component) {
-      > h4._title {
-        font-size: 30px;
-      }
-    }
-  }
-}
-```
-
-Both of the above selectors will work I would personally recommend the `:not([class])`.
-
-Why do we use the direct descendant selector?
-
-Becuase if we have nested components with children of the same name, the second children with the same name will inherit styles from the first child class.
-
-For example.
-
-```scss
-div.component-one {
-  div._child {
-    // Has it's own styles
-  }
-  div.component-two {
-    div._child {
-      // Would have it's styles + the styles from the ._child above it,
-      // if the direct descendant selector was not used
-    }
-  }
-}
-```
+You can target HTML tags only to mirror your HMTL structure in your CSS if you want add custom style attributes to an element it becomes a child, this way as you read through your mark up you will quickly be able to identify which elements have custom styling. This will also prevent any nested components acciedently getting styled by generic HTML tag selectors, hence why any custom styling must be assigned to a child.
 
 **Modifiers**:
 
 ```scss
-div.alert {
+div.side-menu {
   //...
-  &.\~raised {
-    box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
-  }
-  > h4._title {
+  > h3._title {
     //...
-    &.\~important {
-      text-text-transform: uppercase;
-      font-weight: bold;
+  }
+  > ul._nav {
+    li {
+      > a._link {
+        //..
+        &.\~active {
+          background-color: purple;
+        }
+      }
     }
   }
 }
@@ -148,24 +129,32 @@ Modifiers will never by typecast because they will always be applied with anothe
 **States**:
 
 ```scss
-div.alert {
+div.side-menu {
   //...
-  &.\+danger {
-    background-color: red;
-    &.\~raised {
-      box-shadow: 15px 15px 10px 0px rgba(0,0,0,0.5);
+  > ul._nav {
+    li {
+      > a._link {
+        //...
+        &.\~active {
+          //...
+        }
+      }
     }
-    > h4._title {
-      color:#FFF
-      &.\~important {
-        text-text-transform: capitalize;
+  }
+  &.\+shrunk {
+    //...
+    > ul._nav {
+      li {
+        > a._link {
+          //...
+        }
       }
     }
   }
 }
 ```
 
-A state works similar to a modifier but it is top level and instead of just modifying the element it is applied to it allows you to modify its children and their modifiers. It is intended for things like side menu's where you may have an expanded and shrunk state (as seen in [demo](http://codepen.io/crashy/pen/vKVWZP))
+A state works similar to a modifier but it is top level and instead of just modifying the element it is applied to it allows you to modify its children and their modifiers. In most cases states will be applied/toggled with javascript (as seen in [demo](http://codepen.io/crashy/pen/vKVWZP))
 
 ### Conclusion
 
