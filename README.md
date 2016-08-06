@@ -19,19 +19,19 @@ So how does it work? Please bear in mind that this is a living document and that
 There are five kinds of classes used with the hiccup methodology:
 
 * Components
+* Children - `_` & `-`
+* Modifiers - `&`
+* States - `*`
 * Globals - `!`
-* Children - `_`
-* Modifiers - `~`
-* States - `+`
 
-Note: we explicity avoid the use of the `-` symbol as a prefix so we can use it in our classnames `.class-name` whithout it getting confusing.
+Note: we explicity avoid the use of the `~` and `+` symbols as a prefix becuase they can be used as CSS selectors so we thought it best to keep them out of class names.
 
 We differentiate these class types using prefixes as follows:
 
 **Globals**:
 
 ```scss
-.\!font-large {
+.\!lead{
   font-size: 30px;
 }
 ```
@@ -41,7 +41,7 @@ Globals are the only selector not typecast and that do not require the direct de
 **Components**:
 
 ```scss
-div.side-menu {
+div.menu {
   background-color: lime;
   display: inline-block;
   min-width: 350px;
@@ -50,7 +50,7 @@ div.side-menu {
 }
 ```
 
-All classes **excluding globals** should be typecast to a certain element like `div.alert` why is this?
+All classes **excluding globals** should be typecast to a certain element like `div.menu` why is this?
 When we write CSS we assume certain properties about the element we are going to apply the class to (for example that a `div` is `display: block;`). This means despite how CSS is usually written there is an intended HTML structure for said CSS.
 To strictly enforce the intended structure we require all classes be element typecast to force the correct semantics.
 
@@ -59,66 +59,62 @@ As an added bonus this also speeds up the browsers CSS selector engine.
 **Children**:
 
 ```scss
-div.side-menu {
+div.menu {
   //...
-  > ul._nav {
+  a._menu-link {
   //...  
   }
 }
 ```
 
-Unlike BEM components children can have children as long as all children remain within said component.
-This means your CSS will not be as flat as BEM but it will let you move up and down the DOM with more ease.
+Like BEM we identify children using the `_` however we do this slightly differently using the `_` at the start of the class name followed by the parent component name with the `-` appended and then the class name of the child. Hiccup also recommends against using the `-` in naming components we do this to try and enforce a one word naming convention for our components for example we recommend `.menu` as opposed to `.side-menu`.
+
+Unline BEM Hiccup does allow for the targeting of up to 3 tags without classes, this is bassed on some generic markup associated with traditional HTML elements, for example:
+
+```html
+<table>
+  <tr>
+    <td></td>
+  </tr>
+</table>
+
+<ul>
+  <li>
+    <a></a>
+  </li>
+</ul>
+```
+
+If you find yourself needing more than 3 generic selectors you should probably revisit the way you are structuring your markup or whether or not you should be extracing a new component.
+
+You may also nest your children in generic tags if you need to, like so:
 
 ```scss
-div.side-menu {
+div.menu {
   //...
-  > ul._nav {
+  ul {
     li {
-      > a._link {
-        // Child of child
-      }
+      a._menu-link {
+        //...  
+      } 
     }
   }
 }
 ```
 
-Children should also always be targeted using the direct descendant slector.
-This is intentional so if you have a component nested within another component and both components have children with the same name the nested componets child will **not** inherit the parent components child properties.
-Hiccup however does allow for up to 3 levels of non-classed selectors like so:
-
-```scss
-div.side-menu {
-  //...
-  > ul._nav {
-    li { // Generic selector
-      > a._link {
-        //...
-      }
-    }
-  }
-}
-```
-
-This allows a level of flexibility within the hiccup framework, as there are (not usually, but occaisonally) scenarios where you will want to use targeting of the HTML tags directly to help your CSS understand how your HTML is structured.
-You can target HTML tags only to mirror your HMTL structure in your CSS if you want add custom style attributes to an element it becomes a child, this way as you read through your mark up you will quickly be able to identify which elements have custom styling. This will also prevent any nested components acciedently getting styled by generic HTML tag selectors, hence why any custom styling must be assigned to a child.
+We usually recommend against this but do allow it, it is intended for plugins where you may find the structure of your markup is pre defined and you need to be more specific.
 
 **Modifiers**:
 
 ```scss
-div.side-menu {
+div.menu {
   //...
-  > h3._title {
+  h3._menu-title {
     //...
   }
-  > ul._nav {
-    li {
-      > a._link {
-        //..
-        &.\~active {
-          background-color: purple;
-        }
-      }
+  a._menu-ink {
+    &.\&active {
+      background-color: purple;
     }
   }
 }
@@ -129,26 +125,14 @@ Modifiers will never by typecast because they will always be applied with anothe
 **States**:
 
 ```scss
-div.side-menu {
+div.menu {
   //...
-  > ul._nav {
-    li {
-      > a._link {
-        //...
-        &.\~active {
-          //...
-        }
-      }
+  &.\*shrunk {
+    h3._menu-title {
+      //...
     }
-  }
-  &.\+shrunk {
-    //...
-    > ul._nav {
-      li {
-        > a._link {
-          //...
-        }
-      }
+    a._menu-ink {
+      //...
     }
   }
 }
