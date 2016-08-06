@@ -109,9 +109,6 @@ We usually recommend against this but do allow it, it is intended for plugins wh
 ```scss
 div.menu {
   //...
-  h3._menu-title {
-    //...
-  }
   a._menu-ink {
     &.\&active {
       background-color: purple;
@@ -128,9 +125,6 @@ Modifiers will never by typecast because they will always be applied with anothe
 div.menu {
   //...
   &.\*shrunk {
-    h3._menu-title {
-      //...
-    }
     a._menu-ink {
       //...
     }
