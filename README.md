@@ -62,7 +62,12 @@ As an added bonus this also speeds up the browsers CSS selector engine.
 div.menu {
   //...
   a._menu-link {
-  //...  
+    display: block;
+    padding: 10px;
+    color: white;
+    background-color: deepskyblue;
+    border-bottom: 2px dashed white;
+    text-decoration: none; 
   }
 }
 ```
