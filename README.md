@@ -2,7 +2,7 @@
 
 A super strict yet probably too lenient methodology for writing maintainable CSS.
 
-If you want to see it in action demo [here](http://codepen.io/crashy/pen/vKVWZP) (intentionally ugly to make it easy to follow).
+If you want to see it in action demo [here](http://codepen.io/crashy/pen/grBQyp) (intentionally ugly to make it easy to follow).
 
 ### Intention
 
@@ -137,7 +137,7 @@ div.menu {
 }
 ```
 
-A state works similar to a modifier but it is top level and instead of just modifying the element it is applied to it allows you to modify its children and their modifiers. In most cases states will be applied/toggled with javascript (as seen in [demo](http://codepen.io/crashy/pen/vKVWZP))
+A state works similar to a modifier but it is top level and instead of just modifying the element it is applied to it allows you to modify its children and their modifiers. In most cases states will be applied/toggled with javascript (as seen in [demo](http://codepen.io/crashy/pen/grBQyp))
 
 ### Conclusion
 
