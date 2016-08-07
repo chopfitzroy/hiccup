@@ -147,7 +147,7 @@ With hiccup that becomes the following:
 </div>
 ```
 
-Because we know the exact markup our sub-component will contain we are free to target the image tag directly to apply whatever additional styles we need. It is also okay to be more specific (you will notice the a nested in the span, etc...) in these cases becuase again we know the exact markup in our sub component.
+Because we know the exact markup our sub-component will contain we are free to target the `img` directly to apply whatever additional styles we need. It is also okay to be more specific (you will notice the `a` nested in the `span`, etc...) in these cases becuase again we know the exact markup in our sub component.
 
 **Note**: If you find yourself needing more than **three** generic selectors you should probably revisit the way you are structuring your markup or whether or not you should be extracing a new component.
 
