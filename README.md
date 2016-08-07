@@ -195,7 +195,7 @@ A state works similar to a modifier but it is top level and instead of just modi
 
 _Wouldn't it be easier to drop the concept of Sub-components and States and move towards a more BEM like structure?_
 
-In short YES. But we do won't why? CSS is global meaning that the level of specificity is up to you. Hiccup is more specific / complicated than most other naming conventions not because they do not have these issues but because they do not address them well. Yes more specific CSS is harder to write but it is also easier to maintain.
+In short YES. But we won't, why? CSS is global meaning that the level of specificity is up to you. Hiccup is more specific / complicated than most other naming conventions not because they do not have these issues but because they do not address them well. Yes more specific CSS is harder to write but it is also easier to maintain.
 
 ### Conclusion
 
