@@ -151,6 +151,8 @@ With hiccup that becomes the following:
 
 Because we know the exact markup our sub-component will contain we are free to target the `img` directly to apply whatever additional styles we need. It is also okay to be more specific (you will notice the `a` nested in the `span`, etc...) in these cases becuase again we know the exact markup in our sub component.
 
+If you are adverse to targeting elements without classes that is fine sub-components still utilize children just like regular components. If you were to avoid targeting elements without classes the only difference between your sub-components and your regular components would be that your sub-components would require components and sub-components to not be nested beneath them.
+
 **Note**: If you find yourself needing more than **three** generic selectors you should probably revisit the way you are structuring your markup or whether or not you should be extracing a new component.
 
 **Modifiers**:
