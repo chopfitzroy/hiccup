@@ -172,7 +172,7 @@ Modifiers will never by typecast because they will always be applied with anothe
 div.menu {
   //...
   &.\+shrunk {
-    a._menu\~ink {
+    a._menu\~link {
       //...
     }
   }
