@@ -168,6 +168,8 @@ div.menu {
 
 Modifiers will never by typecast because they will always be applied with another class whether it is a component or a child.
 
+**Note**: modifiers can be applied to Components, Sub-components, and Children.
+
 **States**:
 
 ```scss
@@ -182,6 +184,8 @@ div.menu {
 ```
 
 A state works similar to a modifier but it is top level and instead of just modifying the element it is applied to it allows you to modify its children and their modifiers.
+
+**Note**: states can applied to Components and Sub-components.
 
 <!-- In most cases states will be applied/toggled with javascript (as seen in [demo](http://codepen.io/crashy/pen/grBQyp)) -->
 
