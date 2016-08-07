@@ -25,6 +25,8 @@ There are six kinds of classes used with the hiccup methodology:
 * States - `+`
 * Globals - `!`
 
+**Note**: we explicitly avoid using the `-` to identify classes so it can be used in class names (for example `.side-menu`) without gettign confusing.
+
 We differentiate these class types using prefixes as follows:
 
 **Globals**:
