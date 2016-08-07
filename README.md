@@ -87,15 +87,15 @@ div.\*profile {
 }
 ```
 
-Sub-components are similar to components but with two big differences.
+Sub-components are similar to components but with **two** big differences.
 
-One sub-components explicity require that no components or sub components be nested within them, this means you do not need to accomodate for any unknown markup within your component.
+**One**: sub-components explicity require that no components or sub-components be nested within them, this means you do not need to accomodate for any unknown markup within your component.
 
-__When is this prudent?__
+_When is this prudent?_
 
-Usually for elements where you may be utilizing abolute posiitoning and you know exactly the elements you intended to have in the component and you have only accomodated for them and no extra.
+Usually for elements where you may be utilizing `position: absolute;` (or other more explicit CSS properties) and you know exactly the elements you intended to have in the component and you only want to accomodated for them and no extra.
 
-Two sub-components allow their children for the targeting of up to three nested elements without classes for example:
+**Two**: sub-components allow their children for the targeting of up to **three** nested elements without classes for example:
 
 ```scss
 div.\*profile {
@@ -115,7 +115,7 @@ div.\*profile {
 }
 ```
 
-__Why bother?__
+_Why bother?_
 
 When I set out to create hiccup one of my biggest frustrations with BEM was for things like a sub-component where I knew nothing would ever be nested within the component but I still had to adhere to giving every element I styled a class name including **wrapping elements** which make for (IMHO) terrible markup. Who wants to read:
 
@@ -149,7 +149,7 @@ With hiccup that becomes the following:
 
 Because we know the exact markup our sub-component will contain we are free to target the image tag directly to apply whatever additional styles we need. It is also okay to be more specific (you will notice the a nested in the span, etc...) in these cases becuase again we know the exact markup in our sub component.
 
-**Note**: If you find yourself needing more than 3 generic selectors you should probably revisit the way you are structuring your markup or whether or not you should be extracing a new component.
+**Note**: If you find yourself needing more than **three** generic selectors you should probably revisit the way you are structuring your markup or whether or not you should be extracing a new component.
 
 **Modifiers**:
 
@@ -182,6 +182,12 @@ div.menu {
 A state works similar to a modifier but it is top level and instead of just modifying the element it is applied to it allows you to modify its children and their modifiers.
 
 <!-- In most cases states will be applied/toggled with javascript (as seen in [demo](http://codepen.io/crashy/pen/grBQyp)) -->
+
+### Why so complicated?
+
+_Wouldn't it be easier to drop the concept of Sub-components and States and move towards a more BEM like structure?_
+
+In short YES. But we do won't why? CSS is global meaning that the level of specificity is up to you. Hiccup is more specific / complicated than most other naming conventions not because they do not have these issues but because they do not address them well. Yes more specific CSS is harder to write but it is also easier to maintain.
 
 ### Conclusion
 
