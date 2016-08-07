@@ -95,7 +95,7 @@ _When is this prudent?_
 
 Usually for elements where you may be utilizing `position: absolute;` (or other more explicit CSS properties) and you know exactly the elements you intended to have in the component and you only want to accomodated for them and no extra.
 
-**Two**: sub-components allow their children for the targeting of up to **three** nested elements without classes for example:
+**Two**: sub-components allow their children to target of up to **three** nested elements without classes for example:
 
 ```scss
 div.\*profile {
