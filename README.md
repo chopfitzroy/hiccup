@@ -2,7 +2,7 @@
 
 A super strict yet probably too lenient methodology for writing maintainable CSS.
 
-If you want to see it in action demo [here](http://codepen.io/crashy/pen/grBQyp) (intentionally ugly to make it easy to follow).
+<!-- If you want to see it in action demo [here](http://codepen.io/crashy/pen/grBQyp) (intentionally ugly to make it easy to follow). -->
 
 ### Intention
 
@@ -16,22 +16,21 @@ Why not use just another CSS naming convention like BEM or OOCSS. I found that t
 
 So how does it work? Please bear in mind that this is a living document and that it is subject to change.
 
-There are five kinds of classes used with the hiccup methodology:
+There are six kinds of classes used with the hiccup methodology:
 
 * Components
-* Children - `_` & `-`
+* Sub-components - `*`
+* Children - `_` & `~`
 * Modifiers - `&`
-* States - `*`
+* States - `+`
 * Globals - `!`
-
-Note: we explicity avoid the use of the `~` and `+` symbols as a prefix becuase they can be used as CSS selectors so we thought it best to keep them out of class names.
 
 We differentiate these class types using prefixes as follows:
 
 **Globals**:
 
 ```scss
-.\!lead{
+.\!font-large {
   font-size: 30px;
 }
 ```
@@ -61,7 +60,7 @@ As an added bonus this also speeds up the browsers CSS selector engine.
 ```scss
 div.menu {
   //...
-  a._menu-link {
+  a._menu\~link {
     display: block;
     padding: 10px;
     color: white;
@@ -72,49 +71,92 @@ div.menu {
 }
 ```
 
-Like BEM we identify children using the `_` however we do this slightly differently using the `_` at the start of the class name followed by the parent component name with the `-` appended and then the class name of the child. Hiccup also recommends against using the `-` in naming components we do this to try and enforce a one word naming convention for our components for example we recommend `.menu` as opposed to `.side-menu`.
+Like BEM we identify children using the `_` however we do this slightly differently using the `_` at the start of the class name followed by the parent component name with the `~` appended and then the class name of the child. This is so you can quickly differentiate between a new component and a components child.
 
-Unline BEM Hiccup does allow for the targeting of up to 3 tags without classes, this is bassed on some generic markup associated with traditional HTML elements, for example:
-
-```html
-<table>
-  <tr>
-    <td></td>
-  </tr>
-</table>
-
-<ul>
-  <li>
-    <a></a>
-  </li>
-</ul>
-```
-
-If you find yourself needing more than 3 generic selectors you should probably revisit the way you are structuring your markup or whether or not you should be extracing a new component.
-
-You may also nest your children in generic tags if you need to, like so:
+**Sub-components**
 
 ```scss
-div.menu {
+div.\*profile {
   //...
-  ul {
-    li {
-      a._menu-link {
-        //...  
-      } 
+  div._\*profile\~image {
+    //...
+    img {
+      //...
     }
   }
 }
 ```
 
-We usually recommend against this but do allow it, it is intended for plugins where you may find the structure of your markup is pre defined and you need to be more specific.
+Sub-components are similar to components but with two big differences.
+
+One sub-components explicity require that no components or sub components be nested within them, this means you do not need to accomodate for any unknown markup within your component.
+
+__When is this prudent?__
+
+Usually for elements where you may be utilizing abolute posiitoning and you know exactly the elements you intended to have in the component and you have only accomodated for them and no extra.
+
+Two sub-components allow their children for the targeting of up to three nested elements without classes for example:
+
+```scss
+div.\*profile {
+  //...
+  div._\*profile\~image {
+    //...
+    img {
+      //...
+    }
+    span {
+      //...
+      a {
+        //...
+      }
+    }
+  }
+}
+```
+
+__Why bother?__
+
+When I set out to create hiccup one of my biggest frustrations with BEM was for things like a sub-component where I knew nothing would ever be nested within the component but I still had to adhere to giving every element I styled a class name including **wrapping elements** which make for (IMHO) terrible markup. Who wants to read:
+
+```html
+<div class="profile">
+  <div class="profile__image-wrapper">
+    <img class="profile__image" src="..." alt="..."/>
+    <span class="profile__link-wrapper">
+      <a class="profile__link">
+        Title text
+      </a>
+    </span>
+  </div>
+</div>
+```
+
+With hiccup that becomes the following:
+
+```html
+<div class="*profile">
+  <div class="_*profile~image">
+    <img src="..." alt="..."/>
+    <span>
+      <a>
+        Title Text
+      </a>
+    </span>
+  </div>
+</div>
+```
+
+Because we know the exact markup our sub-component will contain we are free to target the image tag directly to apply whatever additional styles we need. It is also okay to be more specific (you will notice the a nested in the span, etc...) in these cases becuase again we know the exact markup in our sub component.
+
+**Note**: If you find yourself needing more than 3 generic selectors you should probably revisit the way you are structuring your markup or whether or not you should be extracing a new component.
 
 **Modifiers**:
 
 ```scss
 div.menu {
   //...
-  a._menu-ink {
+  a._menu\~link {
     &.\&active {
       background-color: purple;
     }
@@ -129,15 +171,17 @@ Modifiers will never by typecast because they will always be applied with anothe
 ```scss
 div.menu {
   //...
-  &.\*shrunk {
-    a._menu-ink {
+  &.\+shrunk {
+    a._menu\~ink {
       //...
     }
   }
 }
 ```
 
-A state works similar to a modifier but it is top level and instead of just modifying the element it is applied to it allows you to modify its children and their modifiers. In most cases states will be applied/toggled with javascript (as seen in [demo](http://codepen.io/crashy/pen/grBQyp))
+A state works similar to a modifier but it is top level and instead of just modifying the element it is applied to it allows you to modify its children and their modifiers.
+
+<!-- In most cases states will be applied/toggled with javascript (as seen in [demo](http://codepen.io/crashy/pen/grBQyp)) -->
 
 ### Conclusion
 
