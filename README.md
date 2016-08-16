@@ -182,7 +182,7 @@ div.menu {
 
 A state works similar to a modifier but it is top level and instead of just modifying the element it is applied to it allows you to modify its children and their modifiers.
 
-**Note**: states can applied to Components and Sub-components.
+**Note**: states can be applied to Components and Sub-components.
 
 <!-- In most cases states will be applied/toggled with javascript (as seen in [demo](http://codepen.io/crashy/pen/grBQyp)) -->
 
@@ -198,7 +198,7 @@ div.profile {
     padding: 10px 15px;
     background-color: lime;
     &:hover {
-      backkground-color: deeppink;
+      background-color: deeppink;
     }
   }
 }
@@ -210,7 +210,7 @@ form.contact-form {
     padding: 10px 15px;
     background-color: lime;
     &:hover {
-      backkground-color: deeppink;
+      background-color: deeppink;
     }
   }
 }
@@ -224,7 +224,7 @@ a, button {
     padding: 10px 15px;
     background-color: lime;
     &:hover {
-      backkground-color: deeppink;
+      background-color: deeppink;
     }
   }
 }
