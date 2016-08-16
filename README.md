@@ -97,7 +97,7 @@ _When is this prudent?_
 
 Usually for elements where you may be utilizing `position: absolute;` (or other more explicit CSS properties) and you know exactly the elements you intended to have in the component and you only want to accomodated for them and no extra.
 
-**Two**: sub-components allow their children to target of up to **three** nested elements without classes for example:
+**Two**: sub-components allow their children to target elements without classes for example:
 
 ```scss
 div.\*profile {
@@ -109,9 +109,6 @@ div.\*profile {
     }
     span {
       //...
-      a {
-        //...
-      }
     }
   }
 }
@@ -149,11 +146,9 @@ With hiccup that becomes the following:
 </div>
 ```
 
-Because we know the exact markup our sub-component will contain we are free to target the `img` directly to apply whatever additional styles we need. It is also okay to be more specific (you will notice the `a` nested in the `span`, etc...) in these cases becuase again we know the exact markup in our sub component.
+Because we know the exact markup our sub-component will contain we are free to target the `img` directly to apply whatever additional styles we need.
 
 If you are adverse to targeting elements without classes that is fine sub-components still utilize children just like regular components. If you were to avoid targeting elements without classes the only difference between your sub-components and your regular components would be that your sub-components would require components and sub-components to not be nested beneath them.
-
-**Note**: If you find yourself needing more than **three** generic selectors you should probably revisit the way you are structuring your markup or whether or not you should be extracing a new component.
 
 **Modifiers**:
 
@@ -190,6 +185,90 @@ A state works similar to a modifier but it is top level and instead of just modi
 **Note**: states can applied to Components and Sub-components.
 
 <!-- In most cases states will be applied/toggled with javascript (as seen in [demo](http://codepen.io/crashy/pen/grBQyp)) -->
+
+### When should something become a component?
+
+There are two common instances where a child should become a component/sub-component.
+
+1) When you are repeating styles between components:
+
+```scss
+div.profile {
+  a._profile\~email-link {
+    padding: 10px 15px;
+    background-color: lime;
+    &:hover {
+      backkground-color: deeppink;
+    }
+  }
+}
+```
+
+```scss
+form.contact-form {
+  button._contact-form\~submit {
+    padding: 10px 15px;
+    background-color: lime;
+    &:hover {
+      backkground-color: deeppink;
+    }
+  }
+}
+```
+
+Seeing as these styles are the same they can become:
+
+```scss
+a, button {
+  &.\*button {
+    padding: 10px 15px;
+    background-color: lime;
+    &:hover {
+      backkground-color: deeppink;
+    }
+  }
+}
+```
+
+2) When you have up to two children that belong within another child:
+
+```scss
+div.certificate {
+  div._certificate\~profile {
+    //...
+  }
+  div._certificate\~profile-image {
+    //...
+  }
+  div._certificate\~profile-title {
+    //...
+  }
+}
+```
+
+With the above `div._certificate\~profile-image` and `div._certificate\~profile-title` are intended to be nested within `div._certificate\~profile`. This would be okay.
+
+```scss
+div.certificate {
+  div._certificate\~profile {
+    //...
+  }
+  div._certificate\~profile-image {
+    //...
+  }
+  div._certificate\~profile-title {
+    //...
+  }
+  div._certificate\~profile-content {
+    //...
+  }
+  div._certificate\~profile-social-media {
+    //...
+  }
+}
+```
+
+Where as with the above it would probably make sense to extract `profile` out to its own component:
 
 ### Why so complicated?
 
